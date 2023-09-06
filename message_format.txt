@@ -1,0 +1,17 @@
+Connector Object
+----------------
+{
+    id:int,
+    connector_id:int
+}
+
+Route Object
+------------
+{
+    id:int,
+    incon:int
+    inmsg:str,
+    outcon:int,
+    outmsg:str
+
+}
