@@ -12,10 +12,10 @@ public class RoutesController {
 
     static final List<Route> routeList=Arrays.asList(
         new Route(0,1,"A",2,"B"),
-        new Route(0,2,"B",3,"C"),
-        new Route(0,3,"C",4,"D"),
-        new Route(0,4,"D",5,"E"),
-        new Route(0,5,"E",6,"F")
+        new Route(1,2,"B",3,"C"),
+        new Route(2,3,"C",4,"D"),
+        new Route(3,4,"D",5,"E"),
+        new Route(4,5,"E",6,"F")
     );
 
     @GetMapping("/routes")
