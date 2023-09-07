@@ -20,16 +20,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/connector")
 public class connectorAPI {
-    
+
     ConnectorManager cm = new ConnectorManager();
-    
+
+    @GetMapping("/")
+    public String home() {
+        return "hoiiiiiiiiiii";
+    }
+
     @GetMapping("/getAllConnectors")
-    public List<Connector> getAllConnectors(){
+    public List<Connector> getAllConnectors() {
         return cm.getAllConnectors();
     }
+
     @GetMapping("/getConnector")
-    public Connector getConnector(@RequestParam("connectorId")String connectorId){
+    public Connector getConnector(@RequestParam("connectorId") String connectorId) {
         return cm.getConnector(Integer.parseInt(connectorId));
     }
-    
+
 }
