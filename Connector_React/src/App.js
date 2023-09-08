@@ -2,7 +2,7 @@ import "./App.css";
 import Flow from "./Components/Flow";
 import { initializeApp } from "firebase/app";
 import "firebase/firestore";
-
+import ReactFlows from "./Components/ReactFlows";
 const firebaseConfig = {
   apiKey: "AIzaSyB6d4hcs0p_VWeouDlvj5qOWxduXR2iZZU",
   authDomain: "controller-81019.firebaseapp.com",
@@ -18,7 +18,7 @@ const app = initializeApp(firebaseConfig);
 function App() {
   return (
     <>
-      <Flow />
+      <ReactFlows />
     </>
   );
 }
