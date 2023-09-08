@@ -1,5 +1,14 @@
 import React, { useEffect, useState, useCallback } from "react";
-import ReactFlow, { useNodesState, useEdgesState, addEdge } from "reactflow";
+import ReactFlow, {
+  MiniMap,
+  Controls,
+  Background,
+  addEdge,
+  useNodesState,
+  useEdgesState,
+  applyNodeChanges,
+  applyEdgeChanges,
+} from "reactflow";
 import { ConnectorRoutes } from "./ConnectorRoutes";
 
 import "reactflow/dist/style.css";
@@ -10,6 +19,15 @@ function ReactFlows() {
 
   // const [nodes, setNodes, onNodesChange] = useNodesState([]);
   // const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
+  const onNodesChange = useCallback(
+    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
+    []
+  );
+  const onEdgesChange = useCallback(
+    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    []
+  );
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
@@ -30,7 +48,8 @@ function ReactFlows() {
     let count = 0,
       xval = 50,
       yval = 100,
-      inc = 50;
+      xinc = 120,
+      yinc = 50;
 
     ConnectorRoutes.forEach((value) => {
       // console.log(value.incon, value.inmsg, value.outcon, value.outmsg);
@@ -40,8 +59,8 @@ function ReactFlows() {
         data: { label: value.incon },
       };
       count++;
-      xval = xval + inc;
-      yval = yval + inc;
+      xval = xval + xinc;
+      yval = yval + yinc;
 
       appendItemNode(val1);
 
@@ -51,8 +70,8 @@ function ReactFlows() {
         data: { label: value.outcon },
       };
       count++;
-      xval = xval + inc;
-      yval = yval + inc;
+      xval = xval + xinc;
+      yval = yval + yinc;
       appendItemNode(val2);
 
       let val3 = {
@@ -66,7 +85,7 @@ function ReactFlows() {
 
   useEffect(() => {
     genRoutes();
-    console.log("hii");
+    // console.log("hii");
   }, []);
 
   return (
@@ -74,10 +93,18 @@ function ReactFlows() {
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        onNodesChange={onNodesChange}
+        // edges={edges}
+        onEdgesChange={onEdgesChange}
+
         // onNodesChange={onNodesChange}
         // onEdgesChange={onEdgesChange}
         // onConnect={onConnect}
-      />
+      >
+        <Controls />
+        <MiniMap />
+        <Background variant="dots" gap={12} size={1} />
+      </ReactFlow>
     </div>
   );
 }
