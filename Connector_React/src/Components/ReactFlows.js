@@ -49,7 +49,7 @@ function ReactFlows() {
       xval = 50,
       yval = 100,
       xinc = 120,
-      yinc = 50;
+      yinc = 0;
 
     ConnectorRoutes.forEach((value) => {
       // console.log(value.incon, value.inmsg, value.outcon, value.outmsg);
@@ -78,6 +78,8 @@ function ReactFlows() {
         id: "e" + value.incon + "-" + value.outcon,
         source: value.incon,
         target: value.outcon,
+        animated: true,
+        label: value.inmsg,
       };
       appendDirection(val3);
     });

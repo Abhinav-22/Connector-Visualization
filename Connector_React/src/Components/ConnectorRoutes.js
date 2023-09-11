@@ -6,10 +6,47 @@ export const ConnectorRoutes = [
     outmsg:"B",
   },
   {
-    incon:"1",
-    inmsg:"C",
+    incon:"2",
+    inmsg:"B",
     outcon:"3",
+    outmsg:"F",
+  },
+  {
+    incon:"3",
+    inmsg:"F",
+    outcon:"6",
+    outmsg:"H",
+  },
+  {
+    incon:"6",
+    inmsg:"H",
+    outcon:"8",
+    outmsg:"I",
+  },
+  {
+    incon:"3",
+    inmsg:"G",
+    outcon:"7",
+    outmsg:"J",
+  },
+  {
+    incon:"2",
+    inmsg:"C",
+    outcon:"4",
     outmsg:"D",
+  },
+  {
+    incon:"4",
+    inmsg:"D",
+    outcon:"5",
+    outmsg:"E",
+  },
+  {
+    incon:"5",
+    inmsg:"E",
+    outcon:"6",
+    outmsg:"H",
   }
+
 
 ];
