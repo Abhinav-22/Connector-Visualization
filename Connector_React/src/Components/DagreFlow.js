@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import ReactFlow, {
+  MarkerType,
   addEdge,
   ConnectionLineType,
   Panel,
@@ -37,8 +38,6 @@ const getLayoutedElements = (nodes, edges, direction = "TB") => {
     node.targetPosition = isHorizontal ? "left" : "top";
     node.sourcePosition = isHorizontal ? "right" : "bottom";
 
-    // We are shifting the dagre node position (anchor=center center) to the top left
-    // so it matches the React Flow node anchor point (top left).
     node.position = {
       x: nodeWithPosition.x - nodeWidth / 2,
       y: nodeWithPosition.y - nodeHeight / 2,
@@ -81,20 +80,32 @@ const LayoutFlow = () => {
   );
 
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      connectionLineType={ConnectionLineType.SmoothStep}
-      fitView
-    >
-      <Panel position="top-right">
-        <button onClick={() => onLayout("TB")}>vertical layout</button>
-        <button onClick={() => onLayout("LR")}>horizontal layout</button>
-      </Panel>
-    </ReactFlow>
+    <div style={{ width: "100%", height: "500px" }}>
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        connectionLineType={ConnectionLineType.SmoothStep}
+        fitView
+      >
+        <Panel position="top-right">
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2"
+            onClick={() => onLayout("TB")}
+          >
+            vertical layout
+          </button>
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => onLayout("LR")}
+          >
+            horizontal layout
+          </button>
+        </Panel>
+      </ReactFlow>
+    </div>
   );
 };
 
