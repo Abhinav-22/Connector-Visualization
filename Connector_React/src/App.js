@@ -3,6 +3,10 @@ import Flow from "./Components/Flow";
 import { initializeApp } from "firebase/app";
 import "firebase/firestore";
 import ReactFlows from "./Components/ReactFlows";
+import ForceFlow from "./Components/ForceFlow";
+import Collide from "./Components/Collide";
+import DagreFlow from "./Components/DagreFlow";
+
 const firebaseConfig = {
   apiKey: "AIzaSyB6d4hcs0p_VWeouDlvj5qOWxduXR2iZZU",
   authDomain: "controller-81019.firebaseapp.com",
@@ -18,7 +22,7 @@ const app = initializeApp(firebaseConfig);
 function App() {
   return (
     <>
-      <ReactFlows />
+      <DagreFlow />
     </>
   );
 }
