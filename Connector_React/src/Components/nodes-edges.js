@@ -135,19 +135,4 @@ export const initialEdges = [
       color: "#FF0072",
     },
   },
-  {
-    id: "e4c5e",
-    source: "4",
-    target: " 5",
-    style: {
-      strokeWidth: 1,
-      stroke: "#FF0072",
-    },
-    markerEnd: {
-      type: MarkerType.ArrowClosed,
-      width: 10,
-      height: 10,
-      color: "#FF0072",
-    },
-  },
 ];
