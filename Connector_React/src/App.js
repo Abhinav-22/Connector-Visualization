@@ -22,7 +22,7 @@ const app = initializeApp(firebaseConfig);
 function App() {
   return (
     <>
-      <DagreFlow />
+      <Flow />
     </>
   );
 }
