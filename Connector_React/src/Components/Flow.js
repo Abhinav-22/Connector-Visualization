@@ -57,7 +57,7 @@ const Flow = () => {
     return { nodes, edges };
   };
 
-  const [apiVal, setApiVal] = useState([]);
+  const [apiVal, setApiVal] = useNodesState([]);
   const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
     apiVal,
     initialEdges
@@ -90,22 +90,43 @@ const Flow = () => {
 
   const afterFetch = async () => {
     // const dataVal = { label: "hi" };
+    const isHorizontal = true;
+    dagreGraph.setGraph({ rankdir: "LR" });
     const position1 = { x: 0, y: 0 };
     await fetch("http://localhost:8080/connector/getAllConnectors")
       .then((val) => val.json())
       .then((data1) => {
-        const modifiedData = data1.map((item) => ({
-          ...item,
-          // data: { label: item.data },
-          // position: position1,
-        }));
-        setApiVal((prevnodes) => [...prevnodes, modifiedData]);
+        data1.forEach((content) => {
+          content.data = { label: content.data };
+        });
+        data1.forEach((node) => {
+          // console.log(node.id, "ID");
+          dagreGraph.setNode(node.id, {
+            width: nodeWidth,
+            height: nodeHeight,
+          });
+        });
+        dagre.layout(dagreGraph);
+
+        data1.forEach((node) => {
+          const nodeWithPosition = dagreGraph.node(node.id);
+          node.targetPosition = isHorizontal ? "left" : "top";
+          node.sourcePosition = isHorizontal ? "right" : "bottom";
+
+          node.position = {
+            x: nodeWithPosition.x - nodeWidth / 2,
+            y: nodeWithPosition.y - nodeHeight / 2,
+          };
+          // console.log(node);
+          // return node;
+          setApiVal((prevnodes) => [...prevnodes, node]);
+        });
       });
   };
 
   useEffect(() => {
-    console.log("InitialNodes : ", initialNodes);
-    console.log(typeof initialNodes, "typeInit");
+    // console.log("InitialNodes : ", initialNodes);
+    // console.log(typeof initialNodes, "typeInit");
     afterFetch();
   }, []);
 
@@ -117,11 +138,10 @@ const Flow = () => {
 
   return (
     <div>
-      {/* <button onClick={onClickButton}>Buttonnn</button> */}
       <br />
       <div style={{ width: "100%", height: "500px" }}>
         <ReactFlow
-          nodes={nodes}
+          nodes={apiVal}
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}

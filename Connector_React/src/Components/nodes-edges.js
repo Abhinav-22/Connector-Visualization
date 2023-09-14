@@ -12,32 +12,32 @@ export const initialNodes = [
     position: { x: 0, y: 0 },
   },
   {
-    id: "2a",
+    id: "3",
     data: { label: "node 2a" },
     position: { x: 0, y: 0 },
   },
   {
-    id: "2b",
+    id: "4",
     data: { label: "node 2b" },
     position: { x: 0, y: 0 },
   },
   {
-    id: "2c",
+    id: "5",
     data: { label: "node 2c" },
     position: { x: 0, y: 0 },
   },
   {
-    id: "2d",
+    id: "6",
     data: { label: "node 2d" },
     position: { x: 0, y: 0 },
   },
   {
-    id: "3",
+    id: "7",
     data: { label: "node 3" },
     position: { x: 200, y: 0 },
   },
   {
-    id: "4",
+    id: "8",
     data: { label: "node 4" },
     position: { x: 200, y: 0 },
   },
@@ -78,7 +78,7 @@ export const initialEdges = [
   {
     id: "e22a",
     source: "2",
-    target: "2a",
+    target: "4",
     style: {
       strokeWidth: 1,
       stroke: "#FF0072",
@@ -93,7 +93,7 @@ export const initialEdges = [
   {
     id: "e22b",
     source: "2",
-    target: "2b",
+    target: "7",
     style: {
       strokeWidth: 1,
       stroke: "#FF0072",
@@ -107,8 +107,8 @@ export const initialEdges = [
   },
   {
     id: "e22c",
-    source: "2",
-    target: "2c",
+    source: "3",
+    target: "5",
     style: {
       strokeWidth: 1,
       stroke: "#FF0072",
@@ -122,8 +122,8 @@ export const initialEdges = [
   },
   {
     id: "e2c2d",
-    source: "2c",
-    target: "2d",
+    source: "6",
+    target: "5",
     style: {
       strokeWidth: 1,
       stroke: "#FF0072",

@@ -16,7 +16,7 @@ import java.util.Map;
 public class ConnectorManager {
 
     HashMap<String, Connector> connectorMap = new HashMap<String, Connector>();
-    int no_of_connectors = 6;
+    int no_of_connectors = 9;
 
     public ConnectorManager() {
         for (int i = 0; i < no_of_connectors; i++) {
