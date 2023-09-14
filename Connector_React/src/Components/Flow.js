@@ -88,14 +88,17 @@ const Flow = () => {
   );
 
   const afterFetch = async () => {
+    const dataVal = { label: "hi" };
+    const position1 = { x: 0, y: 0 };
     await fetch("http://localhost:8080/connector/getAllConnectors")
       .then((val) => val.json())
-      .then((data) => {
-        data.forEach((value) => {
-          setApiVal((prevnodes) => [...prevnodes, value]);
-
-          console.log(value);
-        });
+      .then((data1) => {
+        const modifiedData = data1.map((item) => ({
+          ...item,
+          data: { Label: item.data },
+          position: position1,
+        }));
+        setApiVal((prevnodes) => [...prevnodes, modifiedData]);
       });
   };
 
@@ -105,6 +108,7 @@ const Flow = () => {
 
   useEffect(() => {
     console.log(apiVal);
+    console.log("inside useEffect apiVal");
   }, [apiVal]);
 
   return (
