@@ -9,29 +9,28 @@ package com.connector.connectorroute.model;
  * @author thomasjacob
  */
 public class Connector {
-    private int id;
-    private int connector_id;
+    private String id;
+    private Object data;
 
-    public Connector(int id, int connector_id) {
+    public Connector(String id, String data) {
         this.id = id;
-        this.connector_id = connector_id;
+        this.data = data;
     }
 
-    
-    
-    public int getId() {
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getConnector_id() {
-        return connector_id;
-    }
-
-    public void setConnector_id(int connector_id) {
-        this.connector_id = connector_id;
-    }
 }

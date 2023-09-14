@@ -14,28 +14,28 @@ import java.util.Map;
  * @author thomasjacob
  */
 public class ConnectorManager {
-    
-    HashMap<Integer, Connector> connectorMap = new HashMap<Integer, Connector>();
+
+    HashMap<String, Connector> connectorMap = new HashMap<String, Connector>();
     int no_of_connectors = 6;
-    
+
     public ConnectorManager() {
-        for(int i = 0; i < no_of_connectors; i++){
-            Connector currObj = new Connector(i+1, i+1);
-            connectorMap.put(currObj.getConnector_id(), currObj);
+        for (int i = 0; i < no_of_connectors; i++) {
+            Connector currObj = new Connector(String.valueOf(i), "node " + i);
+            connectorMap.put(currObj.getId(), currObj);
         }
     }
-    
-    public List<Connector> getAllConnectors(){
+
+    public List<Connector> getAllConnectors() {
         List<Connector> connectorList = new ArrayList<Connector>();
-        
-        for (Map.Entry<Integer, Connector> entry : connectorMap.entrySet()) {
+
+        for (Map.Entry<String, Connector> entry : connectorMap.entrySet()) {
             Connector connector = entry.getValue();
             connectorList.add(connector);
         }
         return connectorList;
     }
-    
-    public Connector getConnector(int connectorId){
+
+    public Connector getConnector(int connectorId) {
         return connectorMap.get(connectorId);
     }
 }
