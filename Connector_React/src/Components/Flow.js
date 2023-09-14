@@ -28,6 +28,7 @@ const Flow = () => {
     dagreGraph.setGraph({ rankdir: direction });
 
     nodes.forEach((node) => {
+      // console.log(node.id, "ID");
       dagreGraph.setNode(node.id, {
         width: nodeWidth,
         height: nodeHeight,
@@ -49,18 +50,18 @@ const Flow = () => {
         x: nodeWithPosition.x - nodeWidth / 2,
         y: nodeWithPosition.y - nodeHeight / 2,
       };
-
+      console.log(node);
       return node;
     });
 
     return { nodes, edges };
   };
 
+  const [apiVal, setApiVal] = useState([]);
   const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
-    initialNodes,
+    apiVal,
     initialEdges
   );
-  const [apiVal, setApiVal] = useState([]);
 
   const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
@@ -88,26 +89,29 @@ const Flow = () => {
   );
 
   const afterFetch = async () => {
-    const dataVal = { label: "hi" };
+    // const dataVal = { label: "hi" };
     const position1 = { x: 0, y: 0 };
     await fetch("http://localhost:8080/connector/getAllConnectors")
       .then((val) => val.json())
       .then((data1) => {
         const modifiedData = data1.map((item) => ({
           ...item,
-          data: { Label: item.data },
-          position: position1,
+          // data: { label: item.data },
+          // position: position1,
         }));
         setApiVal((prevnodes) => [...prevnodes, modifiedData]);
       });
   };
 
   useEffect(() => {
+    console.log("InitialNodes : ", initialNodes);
+    console.log(typeof initialNodes, "typeInit");
     afterFetch();
   }, []);
 
   useEffect(() => {
-    console.log(apiVal);
+    console.log("apival : ", apiVal);
+    console.log(typeof apiVal, "typeAPIVaL");
     console.log("inside useEffect apiVal");
   }, [apiVal]);
 
