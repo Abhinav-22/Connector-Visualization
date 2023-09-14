@@ -23,7 +23,7 @@ public class ConnectorManager {
             Connector currObj = new Connector(String.valueOf(i), "node " + i);
             connectorMap.put(currObj.getId(), currObj);
         }
-        connectorMap.put("dummy",new Connector("dummy", "-1"));
+        connectorMap.put("-1",new Connector("-1", "-1"));
     }
 
     public List<Connector> getAllConnectors() {
