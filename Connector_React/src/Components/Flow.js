@@ -50,17 +50,18 @@ const Flow = () => {
         x: nodeWithPosition.x - nodeWidth / 2,
         y: nodeWithPosition.y - nodeHeight / 2,
       };
-      console.log(node);
+      // console.log(node);
       return node;
     });
 
     return { nodes, edges };
   };
 
-  const [apiVal, setApiVal] = useNodesState([]);
+  const [apiVal, setApiVal] = useState([]);
+  const [apiEdge, setEdgeVal] = useState([]);
   const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
     apiVal,
-    initialEdges
+    apiEdge
   );
 
   const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
@@ -122,6 +123,29 @@ const Flow = () => {
           setApiVal((prevnodes) => [...prevnodes, node]);
         });
       });
+
+    await fetch("http://localhost:8080/routes")
+      .then((val) => val.json())
+      .then((res) => {
+        const modifiedData = res.map((item) => ({
+          id: item.id,
+          source: item.source,
+          target: item.target,
+          style: {
+            strokeWidth: 1,
+            stroke: "#FF0072",
+          },
+          label: item.inmsg,
+          markerEnd: {
+            type: MarkerType.ArrowClosed,
+            width: 10,
+            height: 10,
+            color: "#FF0072",
+          },
+        }));
+        // console.log("RESSS", res);
+        setEdgeVal(modifiedData);
+      });
   };
 
   useEffect(() => {
@@ -136,13 +160,21 @@ const Flow = () => {
     console.log("inside useEffect apiVal");
   }, [apiVal]);
 
+  useEffect(() => {
+    // console.log("APIedgeVal : ", apiEdge);
+    // console.log(apiEdge, "hi");
+    apiEdge.forEach((edge) => {
+      dagreGraph.setEdge(edge.source, edge.target);
+    });
+  }, [apiEdge]);
+
   return (
     <div>
       <br />
       <div style={{ width: "100%", height: "500px" }}>
         <ReactFlow
           nodes={apiVal}
-          edges={edges}
+          edges={apiEdge}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
