@@ -192,7 +192,7 @@ const Flow = () => {
       source: item.source,
       target: item.target,
       style: {
-        strokeWidth: 1,
+        strokeWidth: 2,
         stroke: "#FF0072",
       },
       label: item.inmsg,
@@ -241,22 +241,7 @@ const Flow = () => {
           onConnect={onConnect}
           connectionLineType={ConnectionLineType.SmoothStep}
           fitView
-        >
-          <Panel position="top-right">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-2"
-              onClick={() => onLayout("TB")}
-            >
-              vertical layout
-            </button>
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => onLayout("LR")}
-            >
-              horizontal layout
-            </button>
-          </Panel>
-        </ReactFlow>
+        ></ReactFlow>
       </div>
     </div>
   );
