@@ -89,63 +89,123 @@ const Flow = () => {
     [nodes, edges]
   );
 
+  // const afterFetch = async () => {
+  //   // const dataVal = { label: "hi" };
+  //   const isHorizontal = true;
+  //   dagreGraph.setGraph({ rankdir: "LR" });
+  //   const position1 = { x: 0, y: 0 };
+  //   await fetch("http://localhost:8080/connector/getAllConnectors")
+  //     .then((val) => val.json())
+  //     .then((data1) => {
+  //       data1.forEach((content) => {
+  //         content.data = { label: content.data };
+  //       });
+  //       data1.forEach((node) => {
+  //         // console.log(node.id, "ID");
+  //         dagreGraph.setNode(node.id, {
+  //           width: nodeWidth,
+  //           height: nodeHeight,
+  //         });
+  //       });
+  //       dagre.layout(dagreGraph);
+
+  //       data1.forEach((node) => {
+  //         const nodeWithPosition = dagreGraph.node(node.id);
+  //         node.targetPosition = isHorizontal ? "left" : "top";
+  //         node.sourcePosition = isHorizontal ? "right" : "bottom";
+
+  //         node.position = {
+  //           x: nodeWithPosition.x - nodeWidth / 2,
+  //           y: nodeWithPosition.y - nodeHeight / 2,
+  //         };
+  //         // console.log(node);
+  //         // return node;
+  //         setApiVal((prevnodes) => [...prevnodes, node]);
+  //       });
+  //     });
+
+  //   await fetch("http://localhost:8080/routes")
+  //     .then((val) => val.json())
+  //     .then((res) => {
+  //       const modifiedData = res.map((item) => ({
+  //         id: item.id,
+  //         source: item.source,
+  //         target: item.target,
+  //         style: {
+  //           strokeWidth: 1,
+  //           stroke: "#FF0072",
+  //         },
+  //         label: item.inmsg,
+  //         markerEnd: {
+  //           type: MarkerType.ArrowClosed,
+  //           width: 10,
+  //           height: 10,
+  //           color: "#FF0072",
+  //         },
+  //       }));
+  //       // console.log("RESSS", res);
+  //       setEdgeVal(modifiedData);
+  //     });
+  // };
+
   const afterFetch = async () => {
-    // const dataVal = { label: "hi" };
     const isHorizontal = true;
     dagreGraph.setGraph({ rankdir: "LR" });
-    const position1 = { x: 0, y: 0 };
-    await fetch("http://localhost:8080/connector/getAllConnectors")
-      .then((val) => val.json())
-      .then((data1) => {
-        data1.forEach((content) => {
-          content.data = { label: content.data };
-        });
-        data1.forEach((node) => {
-          // console.log(node.id, "ID");
-          dagreGraph.setNode(node.id, {
-            width: nodeWidth,
-            height: nodeHeight,
-          });
-        });
-        dagre.layout(dagreGraph);
 
-        data1.forEach((node) => {
-          const nodeWithPosition = dagreGraph.node(node.id);
-          node.targetPosition = isHorizontal ? "left" : "top";
-          node.sourcePosition = isHorizontal ? "right" : "bottom";
+    // Fetch and process nodes
+    const nodeResponse = await fetch(
+      "http://localhost:8080/connector/getAllConnectors"
+    );
+    const nodeData = await nodeResponse.json();
 
-          node.position = {
-            x: nodeWithPosition.x - nodeWidth / 2,
-            y: nodeWithPosition.y - nodeHeight / 2,
-          };
-          // console.log(node);
-          // return node;
-          setApiVal((prevnodes) => [...prevnodes, node]);
-        });
+    const updatedNodes = nodeData.map((content) => ({
+      id: content.id,
+      data: { label: content.data },
+    }));
+
+    updatedNodes.forEach((node) => {
+      dagreGraph.setNode(node.id, {
+        width: nodeWidth,
+        height: nodeHeight,
       });
+    });
 
-    await fetch("http://localhost:8080/routes")
-      .then((val) => val.json())
-      .then((res) => {
-        const modifiedData = res.map((item) => ({
-          id: item.id,
-          source: item.source,
-          target: item.target,
-          style: {
-            strokeWidth: 1,
-            stroke: "#FF0072",
-          },
-          label: item.inmsg,
-          markerEnd: {
-            type: MarkerType.ArrowClosed,
-            width: 10,
-            height: 10,
-            color: "#FF0072",
-          },
-        }));
-        // console.log("RESSS", res);
-        setEdgeVal(modifiedData);
-      });
+    dagre.layout(dagreGraph);
+
+    updatedNodes.forEach((node) => {
+      const nodeWithPosition = dagreGraph.node(node.id);
+      node.targetPosition = isHorizontal ? "left" : "top";
+      node.sourcePosition = isHorizontal ? "right" : "bottom";
+
+      node.position = {
+        x: nodeWithPosition.x - nodeWidth / 2,
+        y: nodeWithPosition.y - nodeHeight / 2,
+      };
+    });
+
+    // Fetch and process edges
+    const edgeResponse = await fetch("http://localhost:8080/routes");
+    const edgeData = await edgeResponse.json();
+
+    const updatedEdges = edgeData.map((item) => ({
+      id: item.id,
+      source: item.source,
+      target: item.target,
+      style: {
+        strokeWidth: 1,
+        stroke: "#FF0072",
+      },
+      label: item.inmsg,
+      markerEnd: {
+        type: MarkerType.ArrowClosed,
+        width: 10,
+        height: 10,
+        color: "#FF0072",
+      },
+    }));
+
+    setApiVal(updatedNodes);
+    setEdgeVal(updatedEdges);
   };
 
   useEffect(() => {
@@ -166,6 +226,7 @@ const Flow = () => {
     apiEdge.forEach((edge) => {
       dagreGraph.setEdge(edge.source, edge.target);
     });
+    dagre.layout(dagreGraph);
   }, [apiEdge]);
 
   return (
